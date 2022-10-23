@@ -5,6 +5,7 @@ import come.mine.User.domain.User;
 import come.mine.User.domain.UserDTO;
 import org.springframework.data.domain.Sort;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -14,7 +15,9 @@ public interface UserService {
 
     UserDTO login(UserDTO userDTO);
 
-    List<User> findAll(Sort sort);
+    Messenger logout(HttpServletRequest request);
+
+    List<User> findAll();
 
     void delete(UserDTO userDTO) throws Exception;
 

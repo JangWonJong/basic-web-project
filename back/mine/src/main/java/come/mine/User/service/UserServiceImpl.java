@@ -7,17 +7,22 @@ import come.mine.User.domain.User;
 import come.mine.User.domain.UserDTO;
 import come.mine.User.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Log
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
@@ -64,12 +69,22 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> findAll(Sort sort) {
-        return null;
+    public Messenger logout(HttpServletRequest request) {
+        log.info("logout Method 진입");
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return Messenger.builder().message("로그아웃 완료").build();
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
     public void delete(UserDTO userDTO) throws Exception {
+        User user = userRepository.findByUsername(userDTO.getUsername()).orElse(null);
+        userRepository.delete(user);
 
     }
 
@@ -85,7 +100,18 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Messenger update(User user) {
-        return null;
+        final Optional<User> original = userRepository.findById(user.getUserId());
+        original.ifPresent(user1 -> {
+            User.builder().userId(user.getUserId())
+                    .username(user.getUsername())
+                    .nickname(user.getNickname())
+                    .password(user.getPassword())
+                    .email(user.getEmail())
+                    .build();
+            userRepository.save(user1);
+        });
+
+        return Messenger.builder().message("업데이트 완료").build();
     }
 
     @Override
