@@ -101,14 +101,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Messenger update(User user) {
-        final Optional<User> original = userRepository.findById(user.getUserId());
+    public Messenger update(UserDTO userDTO) {
+        final Optional<User> original = userRepository.findById(userDTO.getUserId());
         original.ifPresent(user1 -> {
-            User.builder().userId(user.getUserId())
-                    .username(user.getUsername())
-                    .nickname(user.getNickname())
-                    .password(user.getPassword())
-                    .email(user.getEmail())
+            User.builder().userId(userDTO.getUserId())
+                    .username(userDTO.getUsername())
+                    .nickname(userDTO.getNickname())
+                    .password(userDTO.getPassword())
+                    .email(userDTO.getEmail())
                     .build();
             userRepository.save(user1);
         });

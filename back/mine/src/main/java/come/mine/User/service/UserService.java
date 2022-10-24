@@ -25,7 +25,7 @@ public interface UserService {
 
     Messenger getOne(Long id);
 
-    Messenger update(User user);
+    Messenger update(UserDTO userDTO);
 
     void removeUser(String userId);
 
