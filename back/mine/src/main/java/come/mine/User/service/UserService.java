@@ -30,4 +30,6 @@ public interface UserService {
     void removeUser(String userId);
 
     public void findPw(HttpServletResponse response, UserDTO userDTO) throws Exception;
+
+    User findById(long userId);
 }

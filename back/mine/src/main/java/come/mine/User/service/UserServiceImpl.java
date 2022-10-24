@@ -125,4 +125,9 @@ public class UserServiceImpl implements UserService{
     public void findPw(HttpServletResponse response, UserDTO userDTO) throws Exception {
 
     }
+
+    @Override
+    public User findById(long userId) {
+        return userRepository.findById(userId).orElseThrow(()->new IllegalArgumentException("존재하지 않는 회원입니다."));
+    }
 }
