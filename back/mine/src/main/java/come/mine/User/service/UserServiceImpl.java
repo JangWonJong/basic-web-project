@@ -57,6 +57,7 @@ public class UserServiceImpl implements UserService{
                 if(checkPassword){
                     returnUser = modelMapper.map(findUser, UserDTO.class);
                     findUser = modelMapper.map(returnUser, User.class);
+                    userRepository.save(findUser);
                 }else {
                     String token = "FAILURE";
                 }

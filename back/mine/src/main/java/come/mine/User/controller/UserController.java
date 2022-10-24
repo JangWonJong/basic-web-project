@@ -4,8 +4,11 @@ import come.mine.Auth.domain.Messenger;
 import come.mine.User.domain.User;
 import come.mine.User.domain.UserDTO;
 import come.mine.User.service.UserService;
+import io.swagger.annotations.*;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,11 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @ApiOperation(value = "${UserController.login}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something Wrong"),
+            @ApiResponse(code = 422, message = "유효하지 않는 아이디/비밀번호")
+    })
     public ResponseEntity<UserDTO> login(@ApiParam("Login User")@RequestBody UserDTO userDTO){
         System.out.println("로그인 정보:"+ userDTO.getUsername());
         return ResponseEntity.ok(service.login(userDTO));
