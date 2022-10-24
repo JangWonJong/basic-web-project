@@ -29,6 +29,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@ApiParam("Login User")@RequestBody UserDTO userDTO){
+        System.out.println("로그인 정보:"+ userDTO.getUsername());
         return ResponseEntity.ok(service.login(userDTO));
     }
 
@@ -42,8 +43,9 @@ public class UserController {
         return ResponseEntity.ok(service.update(user));
     }
 
-    @DeleteMapping("deleteAll")
+    @DeleteMapping("/deleteAll")
     public Messenger deleteAll(){
+        System.out.println("삭제완료");
         return service.deleteAll();
     }
 

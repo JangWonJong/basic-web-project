@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class User extends TimeEntity{
     @Id
     @Column(name = "user_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
     @Column private @NotNull String username;
     @Column private @NotNull String password;

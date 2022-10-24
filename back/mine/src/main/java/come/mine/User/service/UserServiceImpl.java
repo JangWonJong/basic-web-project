@@ -90,7 +90,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Messenger deleteAll() {
-        return null;
+        userRepository.deleteAll();
+
+        return Messenger.builder().message("삭제").build();
     }
 
     @Override
